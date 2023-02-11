@@ -1,0 +1,161 @@
+schema: '2.0'
+stages:
+  load_clean:
+    cmd: python  src/stages/data_cleaning.py --config=params.yaml
+    deps:
+    - path: data/census.csv
+      md5: 171eff96d34336df1a3d2d82bdb82fe3
+      size: 3811654
+    - path: src/stages/data_cleaning.py
+      md5: 76cd83009321921cd382d85c2c4ce3cc
+      size: 1160
+    params:
+      params.yaml:
+        load_clean:
+          dataset: data/census.csv
+          output: data/clean_census.csv
+    outs:
+    - path: data/clean_census.csv
+      md5: 137fa614aaae57f1ce34a19451bf9e2a
+      size: 3362793
+  test_clean:
+    cmd: pytest  src/stages/test_data_cleaning.py
+  data_split:
+    cmd: python src/stages/data_split.py --config params.yaml
+    deps:
+    - path: data/clean_census.csv
+      md5: 137fa614aaae57f1ce34a19451bf9e2a
+      size: 3362793
+    - path: src/stages/data_split.py
+      md5: 734f57e1374f3834ad7a803314b4fde1
+      size: 1143
+    params:
+      params.yaml:
+        base.random_state: 42
+        data_split:
+          dataset: data/clean_census.csv
+          test_size: 0.2
+          output: data/train
+    outs:
+    - path: data/train/test_set.csv
+      md5: 25a35eb5e764e3d15e7a52370a326370
+      size: 673635
+    - path: data/train/train_set.csv
+      md5: b5a709239218d6d0ba4e1f3e58cd8055
+      size: 2689267
+  preprocess:
+    cmd: python src/stages/preprocess.py --config=params.yaml
+    deps:
+    - path: data/train/test_set.csv
+      md5: 25a35eb5e764e3d15e7a52370a326370
+      size: 673635
+    - path: data/train/train_set.csv
+      md5: b5a709239218d6d0ba4e1f3e58cd8055
+      size: 2689267
+    - path: src/ml_model/data.py
+      md5: e73e7e6556baf46187294101cc55a022
+      size: 3087
+    params:
+      params.yaml:
+        preprocess:
+          target: salary
+          categorical_features:
+          - workclass
+          - education
+          - marital-status
+          - occupation
+          - relationship
+          - race
+          - sex
+          - native-country
+          numerical_features:
+          - age
+          - hours-per-week
+          encoders_dir: artifacts/encoders
+          output_dir: data/train/features
+    outs:
+    - path: artifacts/encoders/cat_features_encoder.gz
+      md5: da2350dca3b5f7d92889eac096d953a6
+      size: 1562
+    - path: artifacts/encoders/label_encoder.gz
+      md5: b7464afcf388e9d71e7f64cc6b8c6762
+      size: 318
+    - path: artifacts/encoders/num_features_encoder.gz
+      md5: 7e7a965dc72a296b2445877fddd72077
+      size: 453
+    - path: data/train/features/x_test.npy
+      md5: 5d95e4d408e4ea4701ccef19b25503a0
+      size: 5418944
+    - path: data/train/features/x_train.npy
+      md5: bdeb03340502abb48a995ada583d4cf0
+      size: 21672064
+    - path: data/train/features/y_test.npy
+      md5: 556a7653e585f09feda8c4cdc415c496
+      size: 52232
+    - path: data/train/features/y_train.npy
+      md5: 56a7db1d9fbdd3ed7896198abe2643d7
+      size: 208512
+  train_model:
+    cmd: python src/stages/train_model.py --config=params.yaml
+    deps:
+    - path: artifacts/encoders/cat_features_encoder.gz
+      md5: da2350dca3b5f7d92889eac096d953a6
+      size: 1562
+    - path: artifacts/encoders/label_encoder.gz
+      md5: b7464afcf388e9d71e7f64cc6b8c6762
+      size: 318
+    - path: artifacts/encoders/num_features_encoder.gz
+      md5: 7e7a965dc72a296b2445877fddd72077
+      size: 453
+    - path: data/train/features/x_test.npy
+      md5: 5d95e4d408e4ea4701ccef19b25503a0
+      size: 5418944
+    - path: data/train/features/x_train.npy
+      md5: bdeb03340502abb48a995ada583d4cf0
+      size: 21672064
+    - path: data/train/features/y_test.npy
+      md5: 556a7653e585f09feda8c4cdc415c496
+      size: 52232
+    - path: data/train/features/y_train.npy
+      md5: 56a7db1d9fbdd3ed7896198abe2643d7
+      size: 208512
+    - path: src/ml_model/data.py
+      md5: e73e7e6556baf46187294101cc55a022
+      size: 3087
+    - path: src/ml_model/model.py
+      md5: ea891a9bb813e4f5ce2ed4e30fedcaf6
+      size: 1574
+    params:
+      params.yaml:
+        preprocess:
+          target: salary
+          categorical_features:
+          - workclass
+          - education
+          - marital-status
+          - occupation
+          - relationship
+          - race
+          - sex
+          - native-country
+          numerical_features:
+          - age
+          - hours-per-week
+          encoders_dir: artifacts/encoders
+          output_dir: data/train/features
+        train:
+          model_type: GradientBoostingClassifier
+          hp:
+          - learning_rate: 0.1
+          - max_depth: 5
+          - min_samples_leaf: 1
+          - min_samples_split: 2
+          - n_estimators: 100
+          model_artifact: artifacts/model/census-gradient-boosting-classifier.gz
+    outs:
+    - path: artifacts/model/census-gradient-boosting-classifier.gz
+      md5: 7a09309953880f812c9d28cdf50ed292
+      size: 176515
+    - path: reports/metrics.json
+      md5: c50638f7f5d4ca8b0ba117387187bc6d
+      size: 135

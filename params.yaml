@@ -1,0 +1,37 @@
+base: 
+  random_state: 42
+  log_level: INFO
+
+load_clean: 
+  dataset: 'data/census.csv'
+  output: 'data/clean_census.csv'
+data_split:
+  dataset: 'data/clean_census.csv'
+  test_size: 0.2
+  output: data/train
+preprocess:
+  target: salary
+  categorical_features:
+  - workclass
+  - education
+  - marital-status
+  - occupation
+  - relationship
+  - race
+  - sex
+  - native-country
+  numerical_features:
+  - age
+  - hours-per-week
+  encoders_dir: artifacts/encoders
+  output_dir: data/train/features
+train:
+  model_type: GradientBoostingClassifier
+  hp:
+  - learning_rate: 0.1
+  - max_depth: 5
+  - min_samples_leaf: 1
+  - min_samples_split: 2
+  - n_estimators: 100
+  model_artifact: artifacts/model/census-gradient-boosting-classifier.gz
+  
