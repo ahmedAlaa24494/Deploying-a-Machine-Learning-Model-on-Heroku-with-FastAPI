@@ -34,12 +34,9 @@ jobs:
       uses: iterative/setup-dvc@v1
     - name: Pull latest pushed expriments
       run: dvc pull
-    - name: Push the outcomes to DVC remote storage 
+    - name: Run expriment with DVC
       run: dvc exp run
-    - name: Commit changes in dvc.lock
-      uses: stefanzweifel/git-auto-commit-action@v4
-      with:
-        commit_message: Commit changes in dvc.lock
-        branch: pipeline
-        file_pattern: dvc.lock
-    
+    - name: Show exp metrics
+      run: dvc metrics show 
+    - name: Show exp metrics diff
+      run: dvc metrics diff    
