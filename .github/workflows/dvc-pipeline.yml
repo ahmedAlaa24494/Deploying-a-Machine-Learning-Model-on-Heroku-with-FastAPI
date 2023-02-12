@@ -2,7 +2,7 @@ name: Run code
 on:
   push: 
     branches:
-     - pipeline
+     - master
     paths:
       - config/**
       - src/**
