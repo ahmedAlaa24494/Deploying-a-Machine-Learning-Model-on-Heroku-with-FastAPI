@@ -1,4 +1,4 @@
-yaml
+PyYAML
 numpy
 pandas
 scikit-learn
