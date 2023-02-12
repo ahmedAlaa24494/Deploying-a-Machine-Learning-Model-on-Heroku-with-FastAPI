@@ -1,7 +1,6 @@
 base: 
   random_state: 42
   log_level: INFO
-
 load_clean: 
   dataset: 'data/census.csv'
   output: 'data/clean_census.csv'
