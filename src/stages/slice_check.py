@@ -3,12 +3,10 @@ import joblib
 import pandas as pd
 from typing import Text
 import yaml
-from tqdm import tqdm
 from pathlib import Path
 import joblib
 import sys
 import pandas as pd
-import numpy as np
 
 src_dir = Path.cwd()
 sys.path.append(str(src_dir))
