@@ -1,18 +1,20 @@
 """ Preprocess Census data 
 """
-import numpy as np 
-import pandas as pd 
+import numpy as np
+import pandas as pd
 from sklearn.preprocessing import LabelBinarizer, OneHotEncoder, StandardScaler
 
-def process_data(X:pd.DataFrame,
-               target:str=None,
-               cat_features:list=[],
-               num_features:list=[],
-               do_train:bool=True,
-               label_encoder:LabelBinarizer=None,
-               cat_features_encoder:OneHotEncoder=None,
-               num_features_encoder:StandardScaler=None
-               ):
+
+def process_data(
+    X: pd.DataFrame,
+    target: str = None,
+    cat_features: list = [],
+    num_features: list = [],
+    do_train: bool = True,
+    label_encoder: LabelBinarizer = None,
+    cat_features_encoder: OneHotEncoder = None,
+    num_features_encoder: StandardScaler = None,
+):
     """Preprocess cleaned Census dataframes, for train or inference
 
     Args:
@@ -20,7 +22,7 @@ def process_data(X:pd.DataFrame,
                 DataFrame to be processed
         target (str, optional):
                 The target column to be predicted (Classification Target). Defaults to None.
-        do_train (bool): 
+        do_train (bool):
                 if True the target values must be provided for training or testing,
                 else Label Encode and cat_features_encoder must be given. Defaults to True
         cat_features (list, optional):
@@ -40,12 +42,12 @@ def process_data(X:pd.DataFrame,
                 For training case this Encoder must be initialized and fitted on the train set,
                 For Inference LabelEncoder must be per-fitted  . Defaults to None.
     """
-    if target is not None: 
+    if target is not None:
         y = X[target]
         x = X.drop([target], axis=1)
-    else: 
+    else:
         y = np.array([])
-    
+
     x_cat = X[cat_features].values
     x_num = X[num_features].values
 
@@ -62,7 +64,7 @@ def process_data(X:pd.DataFrame,
 
         if y.shape[0] == x_cat.shape[0]:
             y = label_encoder.transform(y)
-            
+
     ## Concat categorical and numerical features
-    x = np.concatenate([x_cat,x_num],axis=1)
+    x = np.concatenate([x_cat, x_num], axis=1)
     return x, y, label_encoder, cat_features_encoder, num_features_encoder

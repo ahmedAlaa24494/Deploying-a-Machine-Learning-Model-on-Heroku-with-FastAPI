@@ -26,8 +26,6 @@ def train_model(X_train, y_train, params):
     return gb
 
 
-
-
 def compute_model_metrics(y, preds):
     """
     Validates the trained machine learning model using precision, recall, and F1.
@@ -51,7 +49,7 @@ def compute_model_metrics(y, preds):
 
 
 def inference(model, X):
-    """ Run model inferences and return the predictions.
+    """Run model inferences and return the predictions.
 
     Inputs
     ------
@@ -64,5 +62,5 @@ def inference(model, X):
     preds : np.array
         Predictions from the model.
     """
-    
+
     return model.predict(X)
