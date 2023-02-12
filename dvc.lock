@@ -51,36 +51,20 @@ stages:
           output: data/train
     outs:
     - path: data/train/test_set.csv
-<<<<<<< HEAD
-      md5: 492bba6894c60daf0ae5e0a15bd364f0
-      size: 671704
-    - path: data/train/train_set.csv
-      md5: 366aa0e1510c8bf040df913b632b8b76
-      size: 2691198
-=======
       md5: b12800e762da3b722047c35a5be1c85f
       size: 576493
     - path: data/train/train_set.csv
       md5: da5f92c5fad2ded4279d44217c4fe483
       size: 2305620
->>>>>>> pipeline
   preprocess:
     cmd: python src/stages/preprocess.py --config=params.yaml
     deps:
     - path: data/train/test_set.csv
-<<<<<<< HEAD
-      md5: 492bba6894c60daf0ae5e0a15bd364f0
-      size: 671704
-    - path: data/train/train_set.csv
-      md5: 366aa0e1510c8bf040df913b632b8b76
-      size: 2691198
-=======
       md5: b12800e762da3b722047c35a5be1c85f
       size: 576493
     - path: data/train/train_set.csv
       md5: da5f92c5fad2ded4279d44217c4fe483
       size: 2305620
->>>>>>> pipeline
     - path: src/ml_model/data.py
       md5: 0997995154296698a993562358c8cbe3
       size: 3087
@@ -110,22 +94,6 @@ stages:
       md5: 2dbc4d396f9a0324a7807f5a55ab27f7
       size: 314
     - path: artifacts/encoders/num_features_encoder.gz
-<<<<<<< HEAD
-      md5: 219a4c81a0461ee7e9a1a946130b4043
-      size: 445
-    - path: data/train/features/x_test.npy
-      md5: b4fb706224963fc82b755ad5ff5a5030
-      size: 5418944
-    - path: data/train/features/x_train.npy
-      md5: c09fceb57df9f1f7d1a64eac2277b64c
-      size: 21672064
-    - path: data/train/features/y_test.npy
-      md5: 62cfda3b17ff70e448640b935a49b951
-      size: 52232
-    - path: data/train/features/y_train.npy
-      md5: 7d0560a2c1168e43110e5686bb12472f
-      size: 208512
-=======
       md5: 0823553960816f2b0677ac2afe018fb1
       size: 456
     - path: data/train/features/x_test.npy
@@ -140,7 +108,6 @@ stages:
     - path: data/train/features/y_train.npy
       md5: b2250f40ceb2750882f4c458b0d0f3a5
       size: 193160
->>>>>>> pipeline
   train_model:
     cmd: python src/stages/train_model.py --config=params.yaml
     deps:
@@ -151,22 +118,6 @@ stages:
       md5: 2dbc4d396f9a0324a7807f5a55ab27f7
       size: 314
     - path: artifacts/encoders/num_features_encoder.gz
-<<<<<<< HEAD
-      md5: 219a4c81a0461ee7e9a1a946130b4043
-      size: 445
-    - path: data/train/features/x_test.npy
-      md5: b4fb706224963fc82b755ad5ff5a5030
-      size: 5418944
-    - path: data/train/features/x_train.npy
-      md5: c09fceb57df9f1f7d1a64eac2277b64c
-      size: 21672064
-    - path: data/train/features/y_test.npy
-      md5: 62cfda3b17ff70e448640b935a49b951
-      size: 52232
-    - path: data/train/features/y_train.npy
-      md5: 7d0560a2c1168e43110e5686bb12472f
-      size: 208512
-=======
       md5: 0823553960816f2b0677ac2afe018fb1
       size: 456
     - path: data/train/features/x_test.npy
@@ -181,7 +132,6 @@ stages:
     - path: data/train/features/y_train.npy
       md5: b2250f40ceb2750882f4c458b0d0f3a5
       size: 193160
->>>>>>> pipeline
     - path: src/ml_model/data.py
       md5: 0997995154296698a993562358c8cbe3
       size: 3087
@@ -217,13 +167,6 @@ stages:
           model_artifact: artifacts/model/census-gradient-boosting-classifier.gz
     outs:
     - path: artifacts/model/census-gradient-boosting-classifier.gz
-<<<<<<< HEAD
-      md5: 901ac2061bedfa7d0615118917a2316d
-      size: 180811
-    - path: reports/metrics.json
-      md5: 4b2a08960df75d3b9ac36c71db870a45
-      size: 136
-=======
       md5: e051ef2e876d3480431ef1c01acd75de
       size: 172950
     - path: reports/metrics.json
@@ -323,4 +266,3 @@ stages:
             min_samples_split: 3
             n_estimators: 100
           model_artifact: artifacts/model/census-gradient-boosting-classifier.gz
->>>>>>> pipeline
