@@ -23,6 +23,16 @@ stages:
       size: 2882004
   test_clean:
     cmd: pytest  src/stages/test_data_cleaning.py
+    deps:
+    - path: data/clean_census.csv
+      md5: 2446793aa822b145867de72dbe24bd28
+      size: 2882004
+    - path: src/stages/test_data_cleaning.py
+      md5: 7ff133e9da846875cebc8f78aaa6e1f4
+      size: 472
+    - path: src/utils/data_clean.py
+      md5: ae10580b898bb85ea1b0429a7d6c243d
+      size: 663
   data_split:
     cmd: python src/stages/data_split.py --config params.yaml
     deps:
@@ -56,7 +66,7 @@ stages:
       md5: da5f92c5fad2ded4279d44217c4fe483
       size: 2305620
     - path: src/ml_model/data.py
-      md5: e73e7e6556baf46187294101cc55a022
+      md5: 0997995154296698a993562358c8cbe3
       size: 3087
     params:
       params.yaml:
@@ -123,7 +133,7 @@ stages:
       md5: b2250f40ceb2750882f4c458b0d0f3a5
       size: 193160
     - path: src/ml_model/data.py
-      md5: e73e7e6556baf46187294101cc55a022
+      md5: 0997995154296698a993562358c8cbe3
       size: 3087
     - path: src/ml_model/model.py
       md5: ea891a9bb813e4f5ce2ed4e30fedcaf6
@@ -157,11 +167,11 @@ stages:
           model_artifact: artifacts/model/census-gradient-boosting-classifier.gz
     outs:
     - path: artifacts/model/census-gradient-boosting-classifier.gz
-      md5: 81d06686a4cbd78f558b3c13e9ce17c9
-      size: 174682
+      md5: e051ef2e876d3480431ef1c01acd75de
+      size: 172950
     - path: reports/metrics.json
-      md5: 39eb247fc012af86a444bcf501eb7571
-      size: 135
+      md5: e8cb42e17f2368bf968d1cf99ea4c151
+      size: 123
   slice_validation:
     cmd: python  src/stages/slice_check.py --config=params.yaml
     deps:
@@ -175,8 +185,8 @@ stages:
       md5: 0823553960816f2b0677ac2afe018fb1
       size: 456
     - path: artifacts/model/census-gradient-boosting-classifier.gz
-      md5: 81d06686a4cbd78f558b3c13e9ce17c9
-      size: 174682
+      md5: e051ef2e876d3480431ef1c01acd75de
+      size: 172950
     - path: src/stages/slice_check.py
       md5: 1199295f9d21638e408c5c492e422be5
       size: 2823
@@ -209,5 +219,50 @@ stages:
           model_artifact: artifacts/model/census-gradient-boosting-classifier.gz
     outs:
     - path: reports/slice_output.txt
-      md5: 59c7577502b541cf150b8b1159f0452e
-      size: 8246
+      md5: 30f9eae4e599f93e04deb3b2f16479a9
+      size: 8216
+  test_model_infer:
+    cmd: pytest  src/stages/test_model_steps.py
+    deps:
+    - path: artifacts/encoders/cat_features_encoder.gz
+      md5: a50016694d0a757d05f561e9558aec9f
+      size: 1532
+    - path: artifacts/encoders/label_encoder.gz
+      md5: 2dbc4d396f9a0324a7807f5a55ab27f7
+      size: 314
+    - path: artifacts/encoders/num_features_encoder.gz
+      md5: 0823553960816f2b0677ac2afe018fb1
+      size: 456
+    - path: artifacts/model/census-gradient-boosting-classifier.gz
+      md5: e051ef2e876d3480431ef1c01acd75de
+      size: 172950
+    - path: src/stages/test_model_steps.py
+      md5: e222eea6220eadbd9bb4226614ce418b
+      size: 3576
+    params:
+      params.yaml:
+        preprocess:
+          target: salary
+          categorical_features:
+          - workclass
+          - education
+          - marital-status
+          - occupation
+          - relationship
+          - race
+          - sex
+          - native-country
+          numerical_features:
+          - age
+          - hours-per-week
+          encoders_dir: artifacts/encoders
+          output_dir: data/train/features
+        train:
+          model_type: GradientBoostingClassifier
+          hp:
+            learning_rate: 0.1
+            max_depth: 5
+            min_samples_leaf: 1
+            min_samples_split: 3
+            n_estimators: 100
+          model_artifact: artifacts/model/census-gradient-boosting-classifier.gz

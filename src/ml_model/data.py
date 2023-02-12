@@ -46,8 +46,8 @@ def process_data(X:pd.DataFrame,
     else: 
         y = np.array([])
     
-    x_cat = x[cat_features].values
-    x_num = x[num_features].values
+    x_cat = X[cat_features].values
+    x_num = X[num_features].values
 
     if do_train:
         cat_features_encoder = OneHotEncoder(sparse=False, handle_unknown="ignore")

@@ -1,1 +1,1 @@
-{"Model Name": "GradientBoostingClassifier", "precision": 0.7120127287191726, "recall": 0.591931216931217, "fbeta": 0.6464427591188155}
+{"Model Name": "GradientBoostingClassifier", "precision": 0.708, "recall": 0.5853174603174603, "fbeta": 0.6408399710354815}

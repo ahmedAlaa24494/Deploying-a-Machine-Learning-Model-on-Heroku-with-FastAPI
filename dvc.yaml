@@ -12,6 +12,11 @@ stages:
     - data/clean_census.csv
   test_clean:
     cmd: pytest  src/stages/test_data_cleaning.py
+    deps: 
+    - src/stages/test_data_cleaning.py
+    - src/utils/data_clean.py
+    - data/clean_census.csv
+
   data_split:
     cmd: python src/stages/data_split.py --config params.yaml
     deps: 
@@ -73,3 +78,16 @@ stages:
     - train
     outs:
     - reports/slice_output.txt
+  
+  test_model_infer:
+    cmd: pytest  src/stages/test_model_steps.py
+    deps: 
+    - src/stages/test_model_steps.py
+    - artifacts/encoders/label_encoder.gz
+    - artifacts/encoders/cat_features_encoder.gz
+    - artifacts/encoders/num_features_encoder.gz
+    - artifacts/model/census-gradient-boosting-classifier.gz
+    params:
+    - preprocess
+    - train
+    
