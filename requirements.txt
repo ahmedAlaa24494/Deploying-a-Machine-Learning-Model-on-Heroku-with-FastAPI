@@ -1,7 +1,7 @@
 PyYAML
 numpy
 pandas
-scikit-learn
+scikit-learn==0.24.2
 pytest
 requests
 fastapi
