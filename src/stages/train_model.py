@@ -1,7 +1,6 @@
 import argparse
 import joblib
 from typing import Text
-from collections import ChainMap
 import yaml
 import json
 from pathlib import Path
@@ -38,8 +37,8 @@ def train(config_path: Text) -> None:
     logger.info("Preprocess datasets")
     ## Train GradientBoostingClassifier
     logger.info("Training GradientBoostingClassifier")
-    params = dict(ChainMap(*config['train']['hp']))
-    gb_model = train_model(x_train, y_train, params)
+    
+    gb_model = train_model(x_train, y_train, config['train']['hp'])
     ## Generate test estimations
     logger.info("Compute test estimations with the trained model")
     preds = gb_model.predict(x_test)

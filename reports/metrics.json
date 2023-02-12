@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"Model Name": "GradientBoostingClassifier", "precision": 0.7069805194805194, "recall": 0.5619354838709677, "fbeta": 0.6261682242990655}
+=======
+{"Model Name": "GradientBoostingClassifier", "precision": 0.708, "recall": 0.5853174603174603, "fbeta": 0.6408399710354815}
+>>>>>>> pipeline
