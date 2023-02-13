@@ -22,8 +22,9 @@ This model intended to estimate the salary of an person using given financial in
 - [datalink](https://archive.ics.uci.edu/ml/datasets/census+income) Used 0.2 of the whole dataset as training_set
 
 ## Metrics
-Path                  fbeta    precision    recall                    
-reports/metrics.json  0.64644  0.71201      0.59193
+| #fbeta  | #precision  | #recall   |
+| :---:   | :---:       | :---:     |
+| 0.64644 | 0.71201     | 0.59193   |
 
 ## Ethical Considerations
 This data contains gender, race and country, which might cause the model to bias toward one of these aspects, and that can potentially cause discrimination against persons.
