@@ -33,9 +33,9 @@ jobs:
         aws-region: us-east-1
     - name: Install DVC
       uses: iterative/setup-dvc@v1
-    - name: Pull latest pushed expriments
+    - name: Pull latest pushed experiments
       run: dvc pull
-    - name: Run expriment with DVC
+    - name: Run experiment with DVC
       run: dvc exp run
     - name: Show exp metrics
       run: dvc metrics show 
