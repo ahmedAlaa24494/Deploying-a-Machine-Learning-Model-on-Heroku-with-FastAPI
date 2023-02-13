@@ -6,4 +6,6 @@ pytest
 requests
 fastapi
 uvicorn
+dvc
+dvc-s3
 gunicorn
