@@ -1,5 +1,5 @@
 [core]
     remote = remote-s3
-    no_scm = true
+    no_scm = false
 ['remote "remote-s3"']
     url = s3://udacity-24494/dvc-remote
