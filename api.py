@@ -73,10 +73,21 @@ class Person(BaseModel):
     ]
 
     relationship: Literal[
-        "Unmarried", "Not-in-family", "Own-child", "Husband", "Wife", "Other-relative"
+        "Unmarried",
+        "Not-in-family",
+        "Own-child",
+        "Husband",
+        "Wife",
+        "Other-relative"
     ]
 
-    race: Literal["White", "Black", "Asian-Pac-Islander", "Other", "Amer-Indian-Eskimo"]
+    race: Literal[
+        "White",
+        "Black",
+        "Asian-Pac-Islander",
+        "Other",
+        "Amer-Indian-Eskimo"
+        ]
 
     sex: Literal["Female", "Male"]
 
