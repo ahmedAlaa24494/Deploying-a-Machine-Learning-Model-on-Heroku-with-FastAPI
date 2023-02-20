@@ -35,3 +35,5 @@ jobs:
       run: pytest src/stages/test_model_steps.py
     - name: Test API
       run: pytest api_test.py
+    - name: Run Flake8
+      run: flake8
