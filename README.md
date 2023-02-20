@@ -13,7 +13,7 @@ pytest test_api.py
 python test_heroku_api.py
 ```
 
-## Run and test new expremint with DVC
+## Run and test new experiment with DVC
 ```
 dvc repro
 ```
