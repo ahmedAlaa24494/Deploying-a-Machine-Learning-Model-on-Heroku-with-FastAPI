@@ -3,9 +3,7 @@ on:
   push: 
     branches:
      - master
-    paths:
-      - dvc.lock
-      - .github/workflows/test_model_and_api.yaml
+
 jobs:
   pipe:
     runs-on: ubuntu-latest
@@ -36,4 +34,4 @@ jobs:
     - name: Test API
       run: pytest api_test.py
     - name: Run Flake8
-      run: flake8
+      run: flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
