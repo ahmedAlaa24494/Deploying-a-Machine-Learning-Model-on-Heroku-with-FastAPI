@@ -77,7 +77,7 @@ stages:
     - preprocess
     - train
     outs:
-    - reports/slice_output.txt:
+    - slice_output.txt:
         cache: false
   
   test_model_infer:

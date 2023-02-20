@@ -79,7 +79,7 @@ def slice_validation(config_path: Text) -> None:
             slice_metricies.append(line)
 
     logger.info("Slice metricies computed")
-    with open("reports/slice_output.txt", "w") as out:
+    with open("slice_output.txt", "w") as out:
         for slice_value in slice_metricies:
             out.write(slice_value + "\n")
 
