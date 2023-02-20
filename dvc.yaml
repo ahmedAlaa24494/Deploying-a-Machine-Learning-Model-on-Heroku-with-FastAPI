@@ -77,7 +77,8 @@ stages:
     - preprocess
     - train
     outs:
-    - reports/slice_output.txt
+    - reports/slice_output.txt:
+        cache: false
   
   test_model_infer:
     cmd: pytest  src/stages/test_model_steps.py
