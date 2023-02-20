@@ -4,9 +4,7 @@ import pandas as pd
 from typing import Text
 import yaml
 from pathlib import Path
-import joblib
 import sys
-import pandas as pd
 
 src_dir = Path.cwd()
 sys.path.append(str(src_dir))
@@ -28,7 +26,9 @@ def slice_validation(config_path: Text) -> None:
     with open(config_path) as conf_file:
         config = yaml.safe_load(conf_file)
 
-    logger = get_logger("Preprocess Data", log_level=config["base"]["log_level"])
+    logger = get_logger(
+        "Preprocess Data", log_level=config["base"]["log_level"]
+    )
     logger.info("Read train and test files")
     test_df = pd.read_csv("data/train/test_set.csv")
     cat_features = config["preprocess"]["categorical_features"]
@@ -45,7 +45,7 @@ def slice_validation(config_path: Text) -> None:
     logger.info("Compute slice metrices")
     slice_metricies = []
     for cat in cat_features:
-        ## Loop over unique values of each categorical feature
+        # Loop over unique values of each categorical feature
         for slice in test_df[cat].unique():
             df_slice = test_df[test_df[cat] == slice]
             (
@@ -65,7 +65,9 @@ def slice_validation(config_path: Text) -> None:
                 num_features_encoder=num_features_encoder,
             )
             y_preds = gb_model.predict(x)
-            precision, recall, fbeta = compute_model_metrics(preds=y_preds, y=y)
+            precision, recall, fbeta = compute_model_metrics(
+                preds=y_preds, y=y
+            )
             line = "[%s->%s] Precision: %s " "Recall: %s FBeta: %s" % (
                 cat,
                 slice,

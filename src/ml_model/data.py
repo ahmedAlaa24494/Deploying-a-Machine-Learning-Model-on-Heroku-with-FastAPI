@@ -1,5 +1,6 @@
 """ Preprocess Census data 
 """
+
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import LabelBinarizer, OneHotEncoder, StandardScaler
@@ -52,7 +53,9 @@ def process_data(
     x_num = X[num_features].values
 
     if do_train:
-        cat_features_encoder = OneHotEncoder(sparse=False, handle_unknown="ignore")
+        cat_features_encoder = OneHotEncoder(
+            sparse=False, handle_unknown="ignore"
+        )
         num_features_encoder = StandardScaler()
         label_encoder = LabelBinarizer()
         x_cat = cat_features_encoder.fit_transform(x_cat)
@@ -65,6 +68,6 @@ def process_data(
         if y.shape[0] == x_cat.shape[0]:
             y = label_encoder.transform(y)
 
-    ## Concat categorical and numerical features
+    # Concat categorical and numerical features
     x = np.concatenate([x_cat, x_num], axis=1)
     return x, y, label_encoder, cat_features_encoder, num_features_encoder

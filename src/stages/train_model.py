@@ -38,14 +38,14 @@ def train(config_path: Text) -> None:
 
     # Preprocess
     logger.info("Preprocess datasets")
-    ## Train GradientBoostingClassifier
+    # Train GradientBoostingClassifier
     logger.info("Training GradientBoostingClassifier")
 
     gb_model = train_model(x_train, y_train, config["train"]["hp"])
-    ## Generate test estimations
+    # Generate test estimations
     logger.info("Compute test estimations with the trained model")
     preds = gb_model.predict(x_test)
-    ## Compute Evaluation metrices
+    # Compute Evaluation metrices
     precision, recall, fbeta = compute_model_metrics(preds=preds, y=y_test)
     metrics = {
         "Model Name": "GradientBoostingClassifier",

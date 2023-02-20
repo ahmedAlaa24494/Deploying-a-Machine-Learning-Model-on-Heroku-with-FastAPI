@@ -30,7 +30,13 @@ def config():
 
 def test_x_y_equalized(config):
     train_df = pd.read_csv(config["data_split"]["output"] + "/train_set.csv")
-    x, y, label_encoder, cat_features_encoder, num_features_encoder = process_data(
+    (
+        x,
+        y,
+        label_encoder,
+        cat_features_encoder,
+        num_features_encoder,
+    ) = process_data(
         X=train_df,
         target=config["preprocess"]["target"],
         do_train=True,
@@ -51,7 +57,13 @@ def test_fixed_encoders(clean_data, config):
         f"{config['preprocess']['encoders_dir']}/num_features_encoder.gz"
     )
 
-    _, _, label_encoder, cat_features_encoder, num_features_encoder = process_data(
+    (
+        _,
+        _,
+        label_encoder,
+        cat_features_encoder,
+        num_features_encoder,
+    ) = process_data(
         X=clean_data,
         target=config["preprocess"]["target"],
         do_train=True,
@@ -74,7 +86,7 @@ def test_fixed_encoders(clean_data, config):
     assert num_features_encoder.get_params() == base_num_encoder.get_params()
 
 
-def test_inference(config):
+def test_inference_below(config):
     label_encoder = joblib.load(
         f"{config['preprocess']['encoders_dir']}/label_encoder.gz"
     )
@@ -116,3 +128,46 @@ def test_inference(config):
 
     assert isinstance(prediction, str)
     assert prediction == "<=50K"
+
+def test_inference_above(config):
+    label_encoder = joblib.load(
+        f"{config['preprocess']['encoders_dir']}/label_encoder.gz"
+    )
+    cat_features_encoder = joblib.load(
+        f"{config['preprocess']['encoders_dir']}/cat_features_encoder.gz"
+    )
+    num_features_encoder = joblib.load(
+        f"{config['preprocess']['encoders_dir']}/num_features_encoder.gz"
+    )
+    gb_model = joblib.load(config["train"]["model_artifact"])
+
+    example = [
+            {
+            "age": 35,
+            "workclass": "State-gov",
+            "education": "Doctorate",
+            "marital-status": "Married-civ-spouse",
+            "occupation": "Prof-specialty",
+            "relationship": "Husband",
+            "race": "White",
+            "sex": "Male",
+            "hours-per-week": 80,
+            "native-country": "United-States"
+            }
+    ]
+
+    x_ex, _, _, _, _ = process_data(
+        X=pd.DataFrame(example),
+        target=None,
+        do_train=False,
+        cat_features=config["preprocess"]["categorical_features"],
+        num_features=config["preprocess"]["numerical_features"],
+        label_encoder=label_encoder,
+        cat_features_encoder=cat_features_encoder,
+        num_features_encoder=num_features_encoder,
+    )
+
+    prediction = label_encoder.inverse_transform(inference(gb_model, x_ex))[0]
+
+    assert isinstance(prediction, str)
+    assert prediction == ">50K"

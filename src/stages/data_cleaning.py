@@ -2,7 +2,6 @@ import argparse
 import pandas as pd
 from typing import Text
 import yaml
-from tqdm import tqdm
 from pathlib import Path
 import sys
 
@@ -28,7 +27,7 @@ def load_clean_data(config_path: Text) -> None:
     logger = get_logger("Data Cleaning", log_level=config["base"]["log_level"])
 
     logger.info("Get dataset")
-    ## Read relations file
+    # Read relations file
     data = pd.read_csv(config["load_clean"]["dataset"])
     logger.info("Cleaning data!!!")
     data = clean_cencus(data)

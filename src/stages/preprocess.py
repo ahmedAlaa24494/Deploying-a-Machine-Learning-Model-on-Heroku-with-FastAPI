@@ -1,15 +1,11 @@
 import argparse
-import joblib
-import pandas as pd
 from typing import Text
 import yaml
-from colorama import Fore
-from tqdm import tqdm
 from pathlib import Path
 import joblib
 import sys
-import pandas as pd
 import numpy as np
+import pandas as pd
 
 src_dir = Path.cwd()
 sys.path.append(str(src_dir))
@@ -30,7 +26,9 @@ def preprocess(config_path: Text) -> None:
     with open(config_path) as conf_file:
         config = yaml.safe_load(conf_file)
 
-    logger = get_logger("Preprocess Data", log_level=config["base"]["log_level"])
+    logger = get_logger(
+        "Preprocess Data", log_level=config["base"]["log_level"]
+    )
     logger.info("Read train and test files")
     train_df = pd.read_csv("data/train/train_set.csv")
     test_df = pd.read_csv("data/train/test_set.csv")
@@ -67,10 +65,11 @@ def preprocess(config_path: Text) -> None:
         num_features_encoder=num_features_encoder,
     )
 
-    ## Save encoders
+    # Save encoders
     logger.info("Saving Encoders")
     joblib.dump(
-        label_encoder, f"{config['preprocess']['encoders_dir']}/label_encoder.gz"
+        label_encoder,
+        f"{config['preprocess']['encoders_dir']}/label_encoder.gz",
     )
     joblib.dump(
         cat_features_encoder,
@@ -80,7 +79,7 @@ def preprocess(config_path: Text) -> None:
         num_features_encoder,
         f"{config['preprocess']['encoders_dir']}/num_features_encoder.gz",
     )
-    ## Save Features
+    # Save Features
     logger.info("Saving Features")
     np.save(f"{config['preprocess']['output_dir']}/x_train.npy", x_train)
     np.save(f"{config['preprocess']['output_dir']}/y_train.npy", y_train)

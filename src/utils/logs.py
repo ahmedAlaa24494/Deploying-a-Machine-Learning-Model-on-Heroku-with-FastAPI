@@ -1,5 +1,4 @@
 """Provides functions to create loggers."""
-
 import logging
 from typing import Text, Union
 import sys
@@ -26,7 +25,8 @@ def get_logger(
     """Get logger.
     Args:
         name {Text}: logger name
-        log_level {Text or int}: logging level; can be string name or integer value
+        log_level {Text or int}: logging level; can be string name
+        or integer value
     Returns:
         logging.Logger instance
     """

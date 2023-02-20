@@ -78,16 +78,12 @@ class Person(BaseModel):
         "Own-child",
         "Husband",
         "Wife",
-        "Other-relative"
+        "Other-relative",
     ]
 
     race: Literal[
-        "White",
-        "Black",
-        "Asian-Pac-Islander",
-        "Other",
-        "Amer-Indian-Eskimo"
-        ]
+        "White", "Black", "Asian-Pac-Islander", "Other", "Amer-Indian-Eskimo"
+    ]
 
     sex: Literal["Female", "Male"]
 
