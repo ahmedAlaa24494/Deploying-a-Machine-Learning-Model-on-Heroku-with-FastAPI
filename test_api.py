@@ -49,3 +49,38 @@ def test_wrong_requests(client):
     }
     req = client.post("/", json=wrong_info)
     assert req.status_code != 200
+
+def test_inference_below(client):
+    person = {
+            "age": 20,
+            "workclass": "Private",
+            "education": "Some-college",
+            "marital_status": "Divorced",
+            "occupation": "Exec-managerial",
+            "relationship": "Unmarried",
+            "race": "White",
+            "sex": "Female",
+            "hours_per_week": 60,
+            "native_country": "United-States",
+        }
+
+    req = client.post("/", json=person)
+    assert req.status_code == 200
+    assert req.json() == {"Prediction": "<=50K"}
+
+def test_inference_above(client):
+    person = {
+            "age": 35,
+            "workclass": "State-gov",
+            "education": "Doctorate",
+            "marital_status": "Married-civ-spouse",
+            "occupation": "Prof-specialty",
+            "relationship": "Husband",
+            "race": "White",
+            "sex": "Male",
+            "hours_per_week": 80,
+            "native_country": "United-States"
+            }
+    req = client.post("/", json=person)
+    assert req.status_code == 200
+    assert req.json() == {"Prediction": ">50K"}
