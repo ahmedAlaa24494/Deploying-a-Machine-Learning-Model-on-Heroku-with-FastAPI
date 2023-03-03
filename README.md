@@ -29,7 +29,7 @@ dvc exp run -f
 ## Screenshots requested:
 * [dvc-dag.png](https://github.com/ahmedAlaa24494/Deploying-a-Machine-Learning-Model-on-Heroku-with-FastAPI/blob/master/screenshots/dvc-dag.png)
 * [continuous_deloyment.png](https://github.com/ahmedAlaa24494/Deploying-a-Machine-Learning-Model-on-Heroku-with-FastAPI/blob/master/screenshots/continuous_deloyment.png)
-* [continuous_integration.png](https://github.com/ahmedAlaa24494/Deploying-a-Machine-Learning-Model-on-Heroku-with-FastAPI/blob/master/screenshots/continuous_integration.png)
+* [continuous_integration.png](https://github.com/ahmedAlaa24494/Deploying-a-Machine-Learning-Model-on-Heroku-with-FastAPI/blob/master/screenshots/continues_integration.png)
 * [live_get.png](https://github.com/ahmedAlaa24494/Deploying-a-Machine-Learning-Model-on-Heroku-with-FastAPI/blob/master/screenshots/live_get.png)
 * [live_post.png](https://github.com/ahmedAlaa24494/Deploying-a-Machine-Learning-Model-on-Heroku-with-FastAPI/blob/master/screenshots/live_post.png)
 * [slice_output.txt](https://github.com/ahmedAlaa24494/Deploying-a-Machine-Learning-Model-on-Heroku-with-FastAPI/blob/master/slice_output.txt)
